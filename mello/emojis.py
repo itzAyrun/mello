@@ -1,0 +1,1 @@
+RED_CROSS = "\u274c"
