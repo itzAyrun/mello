@@ -56,6 +56,35 @@ class Mello(commands.Bot):
                 ephemeral=True,
             )
 
+        elif isinstance(error, commands.MissingAnyRole):
+            missing_role_names = []
+            for role_snowflake in error.missing_roles:
+                if ctx.guild is not None:
+                    if isinstance(role_snowflake, int):
+                        missing_role_name = ctx.guild.get_role(role_snowflake).name  # type: ignore
+
+                    else:
+                        missing_role_name = role_snowflake
+
+                    if missing_role_name is not None:
+                        missing_role_names.append(missing_role_name)
+
+            embed_description = (
+                f"{RED_CROSS} You do not have the required roles to use this command.\n"
+                "Please ensure you have one of the following roles:\n\n"
+                f"`{', '.join(missing_role_names)}`"
+            )
+
+            await ctx.reply(embed=Embed(description=embed_description))
+
+        else:
+            developer_id = config.get_developer_id()
+            embed_description = (
+                f"{RED_CROSS} An unknown error occurred. "
+                f"Please contact my developer {self.get_user(developer_id).mention} for more info!"  # type: ignore
+            )
+            await ctx.reply(embed=Embed(description=embed_description), ephemeral=True)
+
     async def setup_hook(self) -> None:
         await self.load_cogs()
         await self.tree.sync()
