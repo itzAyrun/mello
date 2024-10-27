@@ -1,1 +1,9 @@
-prefix = ["?"]
+prefix = ["."]
+developer_id = 1276249261498961920
+
+[commands]
+cooldown = 5
+
+[commands.prefix]
+allowed_roles = ["Administrator", "Moderator"]
+cooldown = 5
