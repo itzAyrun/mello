@@ -1,1 +1,2 @@
 RED_CROSS = "\u274c"
+GREEN_TICK = "\u2705"
