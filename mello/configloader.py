@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import tomli
 import tomli_w
 
@@ -59,6 +59,17 @@ class _ConfigLoader:
         else:
             data["prefix"].remove(prefix)
             self._write(data)
+
+    def get_command(self, command_name: Optional[str] = None) -> dict:
+        cfg_data = self._load()
+        if command_name is None:
+            return cfg_data["commands"]
+
+        return cfg_data["commands"][command_name]
+
+    def get_developer_id(self) -> int:
+        cfg_data = self._load()
+        return cfg_data["developer_id"]
 
 
 config = _ConfigLoader()
